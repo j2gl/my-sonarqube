@@ -2,11 +2,12 @@ version: '3.3'
 
 services:
   sonarqube:
-    image: sonarqube
+    image: sonarqube:6.7.3
     container_name: sonarqube
     ports:
       - "9000:9000"
-      - "9091:9092"
+      # No need for 9092, because if for embedded h2 DB
+      # - "9092:9092"
     networks:
       - sonarnet
     environment:
@@ -18,7 +19,7 @@ services:
       - ./volumes/sonarqube/bundled-plugins:/opt/sonarqube/lib/bundled-plugins
 
   db:
-    image: postgres
+    image: postgres:10.3-alpine
     container_name: sonarqubedb
     ports:
       - 5432:5432
